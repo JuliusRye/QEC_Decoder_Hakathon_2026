@@ -24,6 +24,8 @@ Multiple agents may read in parallel. Assign an owner and branch to each writing
 
 ## Develop and verify
 
+Automated CI must use GitHub-hosted runners, never teammates' computers as self-hosted runners. Pulling and onboarding do not run benchmarks or training. Keep local routine checks at two CPU threads; full-dataset benchmarks, training, and GPU jobs require an explicit request. Do not add them to automatic setup or routine tests.
+
 1. Use a branch for one candidate or hypothesis. Keep the organizer utilities separate from original decoder implementations.
 2. Preserve the `decode(circuit, detector_events)` interface and bitwise LER definition. Add meaningful regression checks for algorithm or interface changes, then run the test suite below.
 3. Evaluate competing candidates on identical frozen X/Z samples independent of training. Save provenance, predictions, paired error counts, first-call time, repeated decode times, hardware, and thread count under a new `runs/` directory.

@@ -21,6 +21,8 @@ Read `docs/README.md`, `docs/COMPETITION.md`, and `CONTRIBUTING.md` before chang
 
 ## Changes and evidence
 
+Keep automated CI on GitHub-hosted runners; do not configure teammates' computers as self-hosted runners. Pulling or onboarding must not launch decoder benchmarks, training, GPU jobs, or full-dataset evaluations. Keep local routine checks at two CPU threads. Full benchmarks and training require an explicit user request; benchmarking is currently paused in favor of onboarding. Do not automatically resume it after setup.
+
 Keep changes bounded and inspect the existing working tree before editing. Do not overwrite another contributor's work. Run `uv sync --locked --extra baselines`, `NUMBA_NUM_THREADS=2 python -m unittest discover -s tests -v`, and `python scripts/check_context.py` for relevant changes. When dependencies change, update and verify the lockfile and standalone candidate requirements together.
 
 Commit and push small coherent changes frequently when the user has authorized publishing; do not wait for a final competition submission to share tested setup with the team. Update relevant agent-facing documentation alongside tested changes: candidate method and limitations, setup commands, data/schema assumptions, artifact-generation commands, and hand-in requirements. Record experiments with `docs/templates/EXPERIMENT.md`; retain source/configuration/data fingerprints, seeds, hardware, thread counts, denominators, paired errors, first-call time, and repeated timing. Link a run record before claiming an accuracy or speed improvement. Separate source statements, measured observations, proposed methods, and human-approved decisions. Do not label the BP global GF(2) fallback as LSD or searched OSD.
