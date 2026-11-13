@@ -2,14 +2,17 @@
 # 'ldpc' package (installed in a throwaway venv) purely to obtain reference numbers. Never import from decoders/.
 # Usage: python refbench.py <repo-root> [args]
 """Reference benchmarks (research only; uses banned ldpc for a reference number, never for submission).
-Eval: 20k fresh shots/basis, seed 7. ILP-MLE on the first N_ILP shots. LUT from 20M independent shots (seeds 1000+)."""
+Usage: refbench.py <repo> <N_ILP> <N_eval> <N_LUT>. Eval: fresh shots, seed 7. ILP-MLE on the first N_ILP eval shots. LUT from N_LUT independent shots (seeds 1000+, 1M per seed)."""
 import sys, time, json, stim, numpy as np
 from scipy.optimize import milp, LinearConstraint, Bounds
 from scipy.sparse import csc_matrix, hstack, identity
 sys.path.insert(0, sys.argv[1] + "/src")
 from hackathon_2026.circuit_tools import problem_info
 from ldpc.bposd_decoder import BpOsdDecoder
-root=sys.argv[1]; N=20000; N_ILP=int(sys.argv[2]); N_LUT=20_000_000; out={}
+root=sys.argv[1]; N=int(sys.argv[3]); N_ILP=int(sys.argv[2]); N_LUT=int(sys.argv[4]); out={"N_eval":N,"N_ILP":N_ILP,"N_LUT":N_LUT}
+try:  # low CPU priority on Windows so the laptop stays responsive
+    import ctypes; ctypes.windll.kernel32.SetPriorityClass(ctypes.windll.kernel32.GetCurrentProcess(), 0x40)
+except Exception: pass
 def keys_of(d):
     pk = np.packbits(d, axis=1, bitorder='little')  # 9 bytes
     lo = pk[:, :8].copy().view(np.uint64)[:, 0]; hi = pk[:, 8].astype(np.uint64)
@@ -41,8 +44,8 @@ for b in "XZ":
     print(b, "ILP done", r, flush=True)
     # LUT from 20M independent shots: per-syndrome count and per-bit ones
     los=[];his=[];obs=[]
-    for k in range(N_LUT//2_000_000):
-        dd, oo = c.compile_detector_sampler(seed=1000+k).sample(2_000_000, separate_observables=True)
+    for k in range(N_LUT//1_000_000):
+        dd, oo = c.compile_detector_sampler(seed=1000+k).sample(1_000_000, separate_observables=True)
         lo,hi = keys_of(dd); los.append(lo); his.append(hi); obs.append(oo)
     lo=np.concatenate(los); hi=np.concatenate(his); ob=np.concatenate(obs); del los,his,obs
     order=np.lexsort((lo,hi)); lo=lo[order]; hi=hi[order]; ob=ob[order]

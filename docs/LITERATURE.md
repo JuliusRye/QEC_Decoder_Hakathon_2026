@@ -50,7 +50,7 @@ What these numbers imply:
 | BP + OSD-CS order 7 | **0.0719** | **0.0690** | 0.133 |
 | BP + OSD-CS order 12 | 0.0712 | 0.0685 | 0.132 |
 
-OSD-CS roughly halves OSD-0's error. Going from order 7 to order 12 barely helps, which suggests BP-OSD is near its limit here. **Our own decoder has to beat about 0.07** to be competitive. We expect the true optimum to be noticeably lower; see the ranking below.
+OSD-CS roughly halves OSD-0's error. Going from order 7 to order 12 barely helps, which suggests BP-OSD is near its limit here. **Our own decoder has to beat about 0.07 just to match BP-OSD.** Exact MLE reaches about 0.034 (Section 6), which is about where the leaderboard sits, so ≈0.03 is the real target.
 
 ## 3. Decoders: state of the art, ranked by expected accuracy on this problem
 
@@ -127,7 +127,71 @@ These questions came up in the team discussion on November 13. Section 6 answers
 
 ## 6. Exact-MLE and hybrid-LUT reference results [M]
 
-_Pending: being filled in from the `refbench.py` run._
+**Run setup.** We used a light run so a teammate laptop stays usable.
+
+- **Evaluation shots:** 4,000 fresh shots per basis, seed 7.
+- **Exact MLE:** run on the first 300 of those shots per basis.
+- **Hybrid lookup table:** built from 4M independent shots per basis, seeds 1000–1003.
+- **Raw output:** [refbench_result.json](evidence/reference-benchmarks/refbench_result.json).
+
+**Exact MLE by integer programming against BP-OSD-CS7, on the same 300 shots (1,200 bits) per basis:**
+
+| Basis | ILP exact MLE | BP-OSD-CS7 | Bits only ILP got wrong | Bits only OSD got wrong | ILP time per shot (1 core, low priority) |
+|---|---|---|---|---|---|
+| X | **0.037** | 0.075 | 16 | 62 | 0.49 s |
+| Z | **0.032** | 0.058 | 13 | 44 | 0.83 s |
+
+1. **Exact MLE roughly halves BP-OSD's error.** The paired counts, 16 vs 62 and 13 vs 44, make the gap clear even though the sample is small. The size of the gap is still uncertain: 300 shots per basis gives roughly ±0.01 on each LER.
+2. **This matches what we hear about the leaderboard.** Teammates report leaders at about 2–3× below the 0.08 baseline, so roughly 0.03, which is the exact-MLE level. **The accuracy target is ≈0.03, not 0.07.** [I]
+3. **Plain ILP is far too slow.** At 0.5–0.8 s per shot, 200k shots need about 1–2 × 10⁵ CPU-seconds, about 40–60 minutes even on 48 cores. That is over the 5-minute hard limit.
+4. **What we need is a *fast* near-MLE decoder.** Options:
+   - a Tesseract-style A\* or beam search, warm-started from BP;
+   - an ILP used only on the hard shots;
+   - a neural decoder trained to imitate MLE or MLD.
+5. **Fully degenerate MLD could go lower still.** MLD sums probability over all errors in each class rather than taking the single best error, so it could score below the MLE number. [I]
+
+**Matt's hybrid lookup table (frequent syndromes, BP-OSD-CS7 fallback), on all 4,000 evaluation shots per basis:**
+
+| Min. table count | Coverage X / Z | Hybrid LER X | Hybrid LER Z | Pure OSD-CS7 LER |
+|---|---|---|---|---|
+| 1 | 39.6% / 42.1% | 0.0686 | 0.0692 | 0.0704 / 0.0706 |
+| 20 | 23.4% / 26.0% | 0.0698 | 0.0704 | |
+| 1000 | 11.2% / 12.4% | 0.0704 | 0.0706 | |
+
+- **The table only helps on easy shots.** On the shots it covers, it beats BP-OSD (for example 0.008 vs 0.012 at count ≥ 1), but those shots are already easy, so the overall gain is about 2%.
+- **The errors are in the rare syndromes.** Those are exactly the ones a table cannot cover. Kevin's smoke test with our own BP found the same thing.
+- **Verdict:** a table is a cheap speed cache, not an accuracy strategy.
+
+## 7. Local Kaggle-style score tracker
+
+[scripts/score_tracker.py](../scripts/score_tracker.py) reproduces the leaderboard metric locally. It never submits anything.
+
+- **Metric:** the MAE over all rows × 4 bits, with columns matched by position, as Kaggle does.
+- **Public/private split:** simulated as 30/70 with a fixed seed, since the real split is hidden.
+- **Error bar:** a standard error computed per shot, because the 4 bits within a shot are correlated.
+- **Final score:** both disputed (t_cap, α) pairs are reported, using local timing scaled to 200k rows, so it is indicative only.
+- **Output:** each run appends a row to the git-ignored `runs/scoreboard.csv`.
+
+It has two modes:
+
+- `--decoder <folder>` runs a `decode()` folder on labelled rows from `data/train/train.csv`, 10k per basis by default.
+- `--predictions <csv>` scores a submission-format file.
+
+We could not read the live leaderboard: the page returns 404 without a signed-in invited account.
+
+Local scoreboard as of this commit (10,000 labelled rows from `data/train/train.csv`, seed 2026, Windows laptop, 2 Numba threads):
+
+| Entry | Score (MAE) ± SE | X | Z | Decode time |
+|---|---|---|---|---|
+| Team BP + GF(2) fallback (`decoders/bp`) | 0.0875 ± 0.0022 | 0.0886 | 0.0864 | 65.8 s for 10k rows |
+| All-zeros template | 0.2932 ± 0.0030 | 0.2984 | 0.2879 | — |
+
+Commands:
+
+```sh
+NUMBA_NUM_THREADS=2 python scripts/score_tracker.py --decoder decoders/bp --shots 5000 --name team-bp
+python scripts/score_tracker.py --predictions runs/bp-full-local.csv --name bp-full
+```
 
 ## Reproducing the measurements
 
@@ -141,4 +205,4 @@ Scripts:
 
 - `analyze.py`: computes the DEM statistics and the lookup-table estimate.
 - `bench.py`: the BP-OSD variants.
-- `refbench.py`: BP-OSD-CS7, ILP exact MLE, and the hybrid lookup table on frozen seed-7 samples. The table is built from 20M independent shots with seeds 1000–1009.
+- `refbench.py`: BP-OSD-CS7, ILP exact MLE, and the hybrid lookup table on frozen seed-7 samples. The recorded run used `refbench.py <repo> 300 4000 4000000`.

@@ -1,0 +1,91 @@
+{
+ "N_eval": 4000,
+ "N_ILP": 300,
+ "N_LUT": 4000000,
+ "X": {
+  "bposd_cs7_us_per_shot": 12062.953233718872,
+  "bposd_cs7_ler": 0.070375,
+  "ilp_ms_per_shot": 485.5835922559102,
+  "ilp_fail": 0,
+  "ilp_ler_subset": 0.03666666666666667,
+  "bposd_cs7_ler_subset": 0.075,
+  "ilp_vs_osd_bits_ilp_only_wrong": 16,
+  "ilp_vs_osd_bits_osd_only_wrong": 62,
+  "lut_distinct": 2552855,
+  "lut_hybrid": {
+   "1": {
+    "coverage": 0.396,
+    "ler": 0.068625,
+    "covered_lut_ler": 0.007891414141414142,
+    "covered_osd_ler": 0.01231060606060606
+   },
+   "5": {
+    "coverage": 0.3015,
+    "ler": 0.0695625,
+    "covered_lut_ler": 0.004767827529021559,
+    "covered_osd_ler": 0.007462686567164179
+   },
+   "20": {
+    "coverage": 0.234,
+    "ler": 0.06975,
+    "covered_lut_ler": 0.004006410256410256,
+    "covered_osd_ler": 0.006677350427350427
+   },
+   "100": {
+    "coverage": 0.162,
+    "ler": 0.0699375,
+    "covered_lut_ler": 0.004629629629629629,
+    "covered_osd_ler": 0.0073302469135802465
+   },
+   "1000": {
+    "coverage": 0.112,
+    "ler": 0.070375,
+    "covered_lut_ler": 0.0,
+    "covered_osd_ler": 0.0
+   }
+  }
+ },
+ "Z": {
+  "bposd_cs7_us_per_shot": 25362.92737722397,
+  "bposd_cs7_ler": 0.0705625,
+  "ilp_ms_per_shot": 829.8224298159281,
+  "ilp_fail": 0,
+  "ilp_ler_subset": 0.03166666666666667,
+  "bposd_cs7_ler_subset": 0.0575,
+  "ilp_vs_osd_bits_ilp_only_wrong": 13,
+  "ilp_vs_osd_bits_osd_only_wrong": 44,
+  "lut_distinct": 2508015,
+  "lut_hybrid": {
+   "1": {
+    "coverage": 0.421,
+    "ler": 0.0691875,
+    "covered_lut_ler": 0.008016627078384799,
+    "covered_osd_ler": 0.011282660332541567
+   },
+   "5": {
+    "coverage": 0.3345,
+    "ler": 0.0698125,
+    "covered_lut_ler": 0.00429745889387145,
+    "covered_osd_ler": 0.006539611360239163
+   },
+   "20": {
+    "coverage": 0.26,
+    "ler": 0.0704375,
+    "covered_lut_ler": 0.0033653846153846156,
+    "covered_osd_ler": 0.0038461538461538464
+   },
+   "100": {
+    "coverage": 0.18675,
+    "ler": 0.0704375,
+    "covered_lut_ler": 0.004685408299866131,
+    "covered_osd_ler": 0.00535475234270415
+   },
+   "1000": {
+    "coverage": 0.1235,
+    "ler": 0.0705625,
+    "covered_lut_ler": 0.0015182186234817814,
+    "covered_osd_ler": 0.0015182186234817814
+   }
+  }
+ }
+}
