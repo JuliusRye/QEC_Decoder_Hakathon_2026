@@ -1,49 +1,71 @@
 # Team start
 
-This is Cornell-QCA's fork of the organizer's starter for the November 13, 2026 QEC decoder hackathon. The decoder approach is undecided. The shared interface supports lookup tables, belief propagation, optimization, ML, and other original methods.
+Cornell-QCA's canonical repository is [Cornell-QCA/QEC_Decoder_Hakathon_2026](https://github.com/Cornell-QCA/QEC_Decoder_Hakathon_2026). `origin` is this fork; `upstream` is [JuliusRye/QEC_Decoder_Hakathon_2026](https://github.com/JuliusRye/QEC_Decoder_Hakathon_2026). Organizer updates through `2614389` are merged on the baseline branch; the imported starter was `6c03afb`.
 
-- [Competition format, rules and unresolved conflicts](COMPETITION.md)
-- [Team workflow, migration and optional Colab training](WORKFLOW.md)
-- [Measured setup evidence](evidence/setup-verification.json)
+- [Competition format, rules, deadlines, and conflicts](COMPETITION.md)
+- [Contribution and review procedure](../CONTRIBUTING.md)
+- [Experiment and optional Colab procedure](WORKFLOW.md)
+- [Source coverage and dated Kaggle context](sources/README.md)
+- [Candidate algorithms and exploratory BP/LUT results](ALGORITHMS.md)
+- [Standalone BP check](evidence/standalone-bp.json) and [Colab pipeline smoke](evidence/colab-mlp-smoke.json)
+- [Papers and technical documentation](references/README.md)
+- [Private source-memory access](memory/README.md)
+- [Initial setup evidence](evidence/setup-verification.json) — historical observations, including the first incorrect sample IDs
 - [Experiment record template](templates/EXPERIMENT.md)
-- [Organizer documentation](../README.md)
-
-## Repository and access
-
-Canonical repository: https://github.com/Cornell-QCA/QEC_Decoder_Hakathon_2026
-
-`origin` is the Cornell-QCA fork. `upstream` is `JuliusRye/QEC_Decoder_Hakathon_2026`. The imported organizer revision is `6c03afbf06068f2ad10e6ddff0d68852835b9888`.
-
-Intended contributors: Kevin, Iván (`smokevan`), Matt (`machommcan`), and Alec (`AlecRiso`). Access is verified separately from a real clone/push drill. This is a public fork; the previous practice repository is private. Keep private team materials and credentials out of public commits. Competition code shared publicly must also be made available through the competition's Kaggle Discussion or Code tabs under the rules.
 
 ## Local setup
 
-From the repository root:
+For a fresh checkout:
 
 ```sh
-uv sync --locked
-source .venv/bin/activate
+git clone https://github.com/Cornell-QCA/QEC_Decoder_Hakathon_2026.git
+cd QEC_Decoder_Hakathon_2026
 ```
 
-Install the base environment only. The optional `tutorials` extra includes decoder packages prohibited in competition submissions. The verified local interpreter is Python 3.13.7, with NumPy 2.2.6 and Stim 1.16.0. The package's ordinary notebook support is installed; no ML framework was added.
-
-Download all five files from the [Kaggle Data tab](https://www.kaggle.com/competitions/quantum-error-correction-decoder/data) into `data/kaggle/`: `train.csv`, `test.csv`, `sample_submission.csv`, and the two circuit files. The current local checkout already contains the download. Downloaded files, `runs/`, and root-level generated submission CSVs are excluded through `.gitignore`.
-
-The organizer's runner expects the CSV name to match its directory name. A local symlink `data/kaggle/kaggle.csv -> test.csv` allows its unchanged runner to read the official download:
+Use Python 3.13 for parity with the organizer's described hand-in environment. The verified baseline environment uses Python 3.13.7, NumPy 2.2.6, Stim 1.16.0, and Numba 0.61.2. Install from the lockfile:
 
 ```sh
-# On a fresh checkout, after downloading the five files:
-ln -s test.csv data/kaggle/kaggle.csv
+uv sync --locked --extra baselines
+source .venv/bin/activate
+NUMBA_NUM_THREADS=2 python -m unittest discover -s tests -v
+```
 
-# Local format/timing smoke check with the organizer's all-zero placeholder:
+The base package supports the organizer notebooks. The optional `tutorials` extra includes QEC decoder packages banned in competition submissions. The baseline extra supplies Numba; it does not install those decoder packages.
+
+Download all five files from the [Kaggle Data tab](https://www.kaggle.com/competitions/quantum-error-correction-decoder/data) to `data/kaggle/`: `train.csv`, `test.csv`, `sample_submission.csv`, and the X/Z circuit files. These downloads and `runs/` are ignored. An existing local symlink `data/kaggle/kaggle.csv -> test.csv` lets the organizer runner read this download; create it only if absent:
+
+```sh
+ln -s test.csv data/kaggle/kaggle.csv
 mkdir -p runs
 python submission_template/run_local.py --problem-set data/kaggle --out runs/placeholder.csv
 ```
 
-These are local checks, not submissions. **The downloaded test IDs disagree with the sample submission IDs; resolve this before uploading any prediction file.** See [the evidence and conflicts](COMPETITION.md#unresolved-source-conflicts).
+The runner above uses the organizer all-zero placeholder. It verifies loading and CSV output. The corrected root `sample_submission.csv` uses `gen_` IDs; an older downloaded sample may use `test_`. Preserve IDs from `test.csv`, compare them with the current corrected template, and record the file hashes before upload. See [the source correction](COMPETITION.md#source-conflicts-and-corrections).
 
-## What was verified
+## Candidate evaluation
 
-The base environment installs, both official circuits have 70 detectors and 4 observables, and training/test files each have 200,000 rows with 100,000 per basis. The unchanged placeholder returns binary arrays of the expected shape and identical predictions across five repeats. Its training bit error rate is 0.28814625. This only verifies plumbing, not a useful decoder or performance on the organizer's machine.
+Candidate folders implement the same standalone `decode` contract. The [MLP Colab notebook](../notebooks/colab_mlp_baseline.ipynb) is an optional training starting point; only a small CPU training/export smoke check is established here; it did not beat the zero baseline. The BP candidate uses normalized min-sum with a global reliability-ordered GF(2) fallback. The LUT candidate uses empirical bitwise majority for observed syndromes and zeros for unseen syndromes. Read the implementation and relevant tests before changing either; global elimination is not an implementation of localized statistics decoding (LSD) or a searched OSD decoder.
 
-The downloaded circuits differ in bytes from the bundled copies but are equal after Stim parses them. No listed banned decoder package is installed. No Kaggle prediction was submitted. Submission readiness remains blocked by the ID discrepancy.
+```sh
+# Analyze the official circuit models.
+python scripts/analyze_model.py --circuits data/kaggle
+
+# Train the sparse LUT on generated shots (once per fresh model directory).
+python decoders/lut/train.py --circuits data/kaggle --shots 200000 --seed 20261113
+
+# Evaluate candidates on identical newly sampled X and Z data.
+# Choose a new output directory every time; existing directories are rejected.
+NUMBA_NUM_THREADS=2 python scripts/evaluate.py --decoders bp lut \
+  --circuits data/kaggle --shots 2000 --seed 719 --runs 3 \
+  --out runs/bp-lut-719
+```
+
+Keep training samples separate from evaluation samples. Evaluation saves the frozen samples, circuit text, predictions, source copies, hashes, environment, and paired error counts. Its per-candidate first-call and median timings include work performed inside `decode`; they are local observations. Finalists are timed on the organizer's hardware and complete test batch. Review provenance and any dirty working tree before publishing an experiment claim.
+
+LUT training uses `python decoders/lut/train.py --circuits data/kaggle --shots 200000 --seed 20261113`. It refuses to replace an existing model for the same circuit. Preserve the prior model and its record before deliberately training a replacement; keep both training code and the selected model for hand-in.
+
+## What the initial setup verified
+
+The [dated setup record](evidence/setup-verification.json) checked installation, 70 detectors and 4 observables per circuit, and 200,000 rows in each train/test file with 100,000 per basis. The all-zero placeholder was repeatable and had training bit error rate 0.28814625. Downloaded and bundled circuits differed in raw bytes but agreed when parsed by Stim. These checks establish plumbing, not candidate accuracy or organizer-machine speed.
+
+Kaggle team membership and GitHub collaborator access require their own checks. The intended four contributors are Kevin, Iván (`smokevan`), Matt (`machommcan`), and Alec (`AlecRiso`). Repository access alone does not establish official Kaggle team membership. Do not infer repository visibility; check before pushing competition code and apply the sharing rules in [COMPETITION.md](COMPETITION.md).

@@ -1,8 +1,8 @@
 # Competition format and rules
 
-Checked November 13, 2026 against the signed-in Kaggle pages in Firefox, including all competition-specific rules and all 18 foundational-rule sections. This is an operational summary; the linked rules remain the source.
+Checked November 13, 2026 against signed-in Kaggle context, including the saved competition-specific rules and all 18 foundational sections. The full main Overview was saved at 07:15 EST; a fresh verbatim Data export and Rules recapture remain unverified. See the [source index](sources/README.md) for capture times and gaps. This is an operational summary; live rules remain the source.
 
-Sources: [Overview](https://www.kaggle.com/competitions/quantum-error-correction-decoder/overview), [Data](https://www.kaggle.com/competitions/quantum-error-correction-decoder/data), [Rules](https://www.kaggle.com/competitions/quantum-error-correction-decoder/rules), and the organizer README at revision `6c03afb`. Kaggle takes precedence over the README. Kaggle's foundational rules take precedence over contrary competition-specific rules.
+Sources: [Overview](https://www.kaggle.com/competitions/quantum-error-correction-decoder/overview), [Data](https://www.kaggle.com/competitions/quantum-error-correction-decoder/data), [Rules](https://www.kaggle.com/competitions/quantum-error-correction-decoder/rules), and the [organizer README at revision `2614389`](sources/organizer-readme-2614389.md). Kaggle takes precedence over the README. Kaggle's foundational rules take precedence over contrary competition-specific rules.
 
 ## Decoder and submission contract
 
@@ -38,17 +38,17 @@ Invite-only; all members must be enrolled university students, at least 18, with
 
 No private code, prediction, or data sharing outside the official team. Public code sharing must be available to all participants through the competition's Kaggle Discussion or Code tabs and satisfy the license rules. The data and organizer repo are MIT licensed; foundational rules require qualifying open-source licenses for incorporated code. Check uncertain libraries or permissions with organizers before relying on them.
 
-## Unresolved source conflicts
+## Source conflicts and corrections
 
 | Issue | Evidence | Current handling |
 | --- | --- | --- |
-| Test IDs | Downloaded `test.csv`: `gen_X_00000`; sample: `test_X_00000`. Each has 200,000 unique IDs, with zero shared IDs. Replacing only `gen_` by `test_` would align them in order. | Do not rewrite IDs or upload a file until the organizer clarifies which ID set is scored. The source generator writes the `gen_` prefix. |
-| Speed score | Kaggle Overview: `t_cap=15.4 s`, `alpha=0.2`; Kaggle Rules §6: `0.56 s`, `0.07`; README: provisional `3 s`, `0.1`. | Formula is `LER * max(1,t/t_cap)**alpha`, but keep the constants unresolved. Do not optimize around an assumed value. |
+| Test IDs — organizer correction available | The first downloaded sample used `test_`, while `test.csv` uses `gen_`. The observed Overview announces a sample typo and corrected Data-tab upload; upstream commit `8447b59` supplies a root `sample_submission.csv` using `gen_`. | Preserve `test.csv` IDs. Use the corrected template and verify complete ID/order equality before upload; an older downloaded sample may still need refreshing. The initial mismatch is historical, not an unresolved organizer-ID question. |
+| Speed score | Observed Kaggle Overview and the first evaluation section of README `2614389`: `t_cap=15.4 s`, `alpha=0.2`; saved Rules §6: `0.56 s`, `0.07`; older duplicate README section: provisional `3 s`, `0.1`. | Formula is `LER * max(1,t/t_cap)**alpha`. Report accuracy and runtime separately. Use 15.4 s / 0.2 only when explicitly describing the observed Overview; rule conflict awaits clarification. |
 | Reproduction tolerance | Rules §5 requires matching every shot; Overview allows at least 99.9% matching rows. | Aim for exact reproduction; obtain clarification before relying on tolerance. |
 | Tie-break | Specific rules use shorter runtime; foundational rules use earlier submission and state they override conflicting specific rules. | Record the conflict; do not assume the speed tie-break is authoritative. |
 | Bundled layout | README references `data/test_set/` and separate public/private folders; the checked-out repo has `data/train/` and `data/test/`. | Use the actual Kaggle download in `data/kaggle/`; keep bundled files intact. |
 
-No question has been posted or sent to the organizers. Local verification evidence is in [setup-verification.json](evidence/setup-verification.json).
+No organizer clarification is recorded here. The [initial setup evidence](evidence/setup-verification.json) predates the sample-ID correction; preserve it as a historical check. Later source observations are indexed in [sources/](sources/README.md).
 
 ## Deadlines in Eastern Standard Time
 

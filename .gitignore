@@ -16,3 +16,4 @@ data/kaggle_competition/
 /data/kaggle/
 /runs/
 /submission*.csv
+/decoders/*/models/

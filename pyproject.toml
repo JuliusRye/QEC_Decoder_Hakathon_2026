@@ -16,6 +16,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+baselines = ["numba==0.61.2; python_version < '3.14'"]
 tutorials = [
     "beliefmatching>=0.2.0",
     "iminuit>=2.32.0",

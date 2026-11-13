@@ -1,0 +1,23 @@
+{
+  "records": [
+    {
+      "basis": "Z",
+      "shots": 200000,
+      "seed": 20261114,
+      "circuit_hash": "36a24a0347bbb82362af28d816d790d5ee1cb1543fef2e9af7ada70536bf9968",
+      "unique_syndromes": 151297,
+      "table_payload_bytes": 1966861,
+      "file_bytes": 741522
+    },
+    {
+      "basis": "X",
+      "shots": 200000,
+      "seed": 20261113,
+      "circuit_hash": "dc6d415ae3f0b5396a7f63ba1047f024be8ce7e44b03ace65348bcee78b3c070",
+      "unique_syndromes": 152928,
+      "table_payload_bytes": 1988064,
+      "file_bytes": 749337
+    }
+  ],
+  "scope": "Compact stored table payload and compressed file sizes; peak training/process RAM was not measured."
+}

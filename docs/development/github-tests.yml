@@ -1,0 +1,25 @@
+name: Baseline tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.13'
+      - name: Install locked baseline dependencies
+        run: uv sync --locked --extra baselines
+      - name: Run regression tests
+        env:
+          NUMBA_NUM_THREADS: '2'
+        run: uv run --locked --extra baselines python -m unittest discover -s tests -v
+      - name: Check shared project context
+        run: uv run --locked --extra baselines python scripts/check_context.py

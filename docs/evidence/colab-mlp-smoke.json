@@ -1,0 +1,31 @@
+{
+  "scope": "CPU pipeline smoke only; 2,000 generated training shots per basis, one epoch; no tuned ML accuracy claim",
+  "python": "3.13.18",
+  "packages": {
+    "torch": "2.14.1+cpu",
+    "numpy": "2.2.6",
+    "stim": "1.16.0"
+  },
+  "training_seed": {
+    "X": 41,
+    "Z": 42
+  },
+  "validation_seed": {
+    "X": 1000041,
+    "Z": 1000042
+  },
+  "validation_shots_per_basis": 10000,
+  "export_parity": "NumPy float32 logits passed allclose rtol1e-4 atol1e-5 against Torch on1000 validation shots per basis",
+  "X": {
+    "validation_ler": 0.50105,
+    "zero_ler": 0.29415,
+    "weights_sha256": "dc0d20e46bfe5a83e8e01a9167597ed2fdcb91a1ed02a50d1bc57102c91d5da0"
+  },
+  "Z": {
+    "validation_ler": 0.42445,
+    "zero_ler": 0.279975,
+    "weights_sha256": "ba12a25933be828edbaa202e420c7f16ac9a8919f4fae463f013b1bdf3f3c6aa"
+  },
+  "training_source_sha256": "3d108f5f1a9503eeeac19ae9e9807d941693b4c2e20fb076e3e7e9c3822c19bb",
+  "limitations": "Observed via Colab rendered output. No GPU or paid compute. Later changes harden incomplete-export packaging and detach loss logging; that updated training path has not yet been executed in Colab. Smoke weights remain in the private Colab runtime, not a selected hand-in."
+}

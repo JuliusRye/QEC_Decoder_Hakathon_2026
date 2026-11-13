@@ -1,0 +1,19 @@
+{
+  "standalone": true,
+  "bases": {
+    "X": {
+      "shots": 128,
+      "ler": 0.07421875
+    },
+    "Z": {
+      "shots": 128,
+      "ler": 0.08984375
+    }
+  },
+  "python": "3.13.7",
+  "installation": "fresh virtual environment, exact decoders/bp/requirements.txt",
+  "development_package_absent": true,
+  "threads": 2,
+  "seed": 991,
+  "scope": "128 generated shots per basis, repeatability and import/shape/binary smoke check; not full-batch timing"
+}
