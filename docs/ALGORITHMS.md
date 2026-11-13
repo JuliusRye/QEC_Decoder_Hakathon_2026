@@ -56,3 +56,9 @@ The [preserved report](evidence/baselines-002.json) records 2,000 fresh shots pe
 On identical samples, BP alone was wrong on 368 X bits and 372 Z bits; LUT alone was wrong on 1,668 X bits and 1,606 Z bits. These are exploratory paired counts, with correlated bits within shots; they are not independent Bernoulli trials for a naive bit-level significance calculation.
 
 BP first X call took 12.8845 s; its median X/Z times were 0.6767/0.7946 s. LUT medians were 0.00255/0.00372 s. These are small-batch local observations, including cold setup on the first call. They do not establish leaderboard LER, 100,000-shot performance, or timing on the organizer's B200 machine. Preserve the full frozen samples and source copies in `runs/baselines-002/` when comparing a later candidate.
+
+## Full local BP timing
+
+A [single cold run](evidence/bp-full-local.json) through the organizer runner decoded all 200,000 bundled labelled shots (100,000 per basis) in **151.00 seconds**, using four CPU threads on the local Intel Mac. The combined printed bit LER was **0.08982** (X0.08946, Z0.09019). This includes first-call compilation/setup and excludes CSV loading/writing. It is not a five-run median or an organizer-machine measurement; CPU contention and peak memory were not controlled/measured. No paid service is required to execute this local decoder.
+
+Use small frozen samples for ordinary development and full-batch runs for promising candidates. The earlier roughly-one-minute linear extrapolation from the4,000-shot smoke was optimistic; use the measured151-second cold run for local planning.

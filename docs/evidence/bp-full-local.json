@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-11-13T12:31:20.643783+00:00",
+  "candidate_commit": "5ff4843e2a9685969df41bdae6714dbfa3d25248",
+  "command": "NUMBA_NUM_THREADS=4 OMP_NUM_THREADS=4 python submission_template/run_local.py --decoder decoders/bp --problem-set data/train --runs 1 --threads 4 --out runs/bp-full-local.csv",
+  "platform": "macOS-15.7.4-x86_64-i386-64bit-Mach-O",
+  "python": "3.13.7",
+  "shots_per_basis": 100000,
+  "total_shots": 200000,
+  "cpu_threads": 4,
+  "runs": 1,
+  "total_decode_seconds_rounded": 151.0,
+  "includes_cold_compilation": true,
+  "ler_printed": {
+    "X": 0.08946,
+    "Z": 0.09019,
+    "combined": 0.08982
+  },
+  "data_sha256": "ad3a87fd4eba2c96f95d230ad8701905813179c4023ed641a5ced5ca8fa5e522",
+  "prediction_sha256": "4e3a494168de9ad5511119b4c373397a7cf2e31e4c663ddbc609fa018d8c7f58",
+  "decoder_sha256": "8b554b3238d72ea19e91ae76870c162547e7d119a981abb5e0c3470f2261fe79",
+  "raw_runner_output": "loading data/train/train.csv ...\ndata/train X: 100000 shots\ndata/train Z: 100000 shots\nrun 1: 151.00 s\nruntime (median of 1): 151.00 s\nwrote runs/bp-full-local.csv\nX: LER 0.08946\nZ: LER 0.09019\nboth: LER 0.08982\n",
+  "limits": "One cold local run on bundled labelled data; not median of five, not organizer hardware, no dedicated CPU isolation, peak memory not measured. CSV loading/writing excluded from reported runner timer."
+}

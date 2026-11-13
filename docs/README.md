@@ -7,7 +7,7 @@ Cornell-QCA's canonical repository is [Cornell-QCA/QEC_Decoder_Hakathon_2026](ht
 - [Experiment and optional Colab procedure](WORKFLOW.md)
 - [Source coverage and dated Kaggle context](sources/README.md)
 - [Candidate algorithms and exploratory BP/LUT results](ALGORITHMS.md)
-- [Standalone BP check](evidence/standalone-bp.json) and [Colab pipeline smoke](evidence/colab-mlp-smoke.json)
+- [Standalone BP check](evidence/standalone-bp.json), [full local BP timing](evidence/bp-full-local.json), and [Colab pipeline smoke](evidence/colab-mlp-smoke.json)
 - [Papers and technical documentation](references/README.md)
 - [Private source-memory access](memory/README.md)
 - [Initial setup evidence](evidence/setup-verification.json) — historical observations, including the first incorrect sample IDs
