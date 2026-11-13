@@ -18,3 +18,4 @@ Primary references checked November 13, 2026. These notes identify relevant meth
 - [Kaggle Rules capture](../sources/kaggle/2026-11-13/rules.md): allowed libraries, original-code requirement, and submission/hand-in constraints.
 
 The Liang/Chen journal DOI was supplied in the project context but did not resolve through the browsing tool during this check; the arXiv abstract and full text were accessible and support the technical note.
+- **Wider literature review and decoder ranking:** see [LITERATURE.md](../LITERATURE.md). It covers Tesseract, Relay-BP, approximate MLD, neural decoders, and the color-code decoders.

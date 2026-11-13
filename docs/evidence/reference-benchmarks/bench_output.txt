@@ -1,0 +1,8 @@
+[X] BP-OSD0      LER=0.11273  shot-fail=0.2102  5938 us/shot (1 core)
+[X] BP-OSD-CS7   LER=0.07185  shot-fail=0.1328  10327 us/shot (1 core)
+[X] BP-OSD-CS12  LER=0.07122  shot-fail=0.1320  10286 us/shot (1 core)
+[Z] BP-OSD0      LER=0.10929  shot-fail=0.2018  3887 us/shot (1 core)
+[Z] BP-OSD-CS7   LER=0.06895  shot-fail=0.1287  9343 us/shot (1 core)
+[Z] BP-OSD-CS12  LER=0.06851  shot-fail=0.1277  10761 us/shot (1 core)
+
+[exited with code 0]
