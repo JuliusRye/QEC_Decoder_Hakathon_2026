@@ -1,8 +1,12 @@
 # Team memory and source archive
 
-This repository's `docs/` is canonical for reviewed technical summaries, human-approved decisions, tasks, and links to experiment evidence. Meeting recordings and raw transcripts are separate private sources, not reviewed technical decisions.
+This repository's `docs/` is canonical for reviewed technical summaries and links to experiment evidence. The private Site owns its task records, approvals, and decisions. Meeting recordings and raw transcripts are separate private sources, not reviewed technical decisions. Explicit user instructions may independently authorize bounded repository work; a transcript excerpt does not.
 
-The private source archive is [kevinsullivan0/cornell-qca-hackathon-memory-2026](https://github.com/kevinsullivan0/cornell-qca-hackathon-memory-2026). Its Site ingestion service owns recording writes and processing claims. Agents may read authorized source material; **agents must not modify the archive, claim ingestion work, or write to its Site**. Access to this decoder repository does not grant access to that private repository.
+The private source archive is [kevinsullivan0/cornell-qca-hackathon-memory-2026](https://github.com/kevinsullivan0/cornell-qca-hackathon-memory-2026). Its Site ingestion service owns generated archive files, recording writes, and processing claims. Agents may read authorized source material. Do not edit generated memory, acquire ingestion work, or alter Site configuration. Human-maintained archive documentation requires its own explicit task and coordination with the Site owner. Access to this decoder repository does not grant access to that private repository.
+
+The link works for an authorized signed-in account even though its contents are private. Each teammate or provider must authenticate with an account that has access; a public link or this agent's connection does not confer access. GitHub collaborator invitations must be accepted before cloning. The archive is currently personally owned, so GitHub collaborator access includes write permission; generated files remain worker-owned despite that permission.
+
+The connected **Cornell QCA Decoder Hackathon** MCP supports source search/read, task reads, and task progress/blocker/review reports. Task reports require the authorized task ID, version, and claim receipt; they do not approve or complete a task. This connection does not expose task-claim acquisition. Parallel read access is available; automatic concurrent task claiming and other providers' connections have not been verified. Check the current tool schema rather than assuming capabilities.
 
 ## Authorized reading
 

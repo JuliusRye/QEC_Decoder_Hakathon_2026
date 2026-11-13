@@ -1,6 +1,6 @@
 # Team start
 
-Cornell-QCA's canonical repository is [Cornell-QCA/QEC_Decoder_Hakathon_2026](https://github.com/Cornell-QCA/QEC_Decoder_Hakathon_2026). `origin` is this fork; `upstream` is [JuliusRye/QEC_Decoder_Hakathon_2026](https://github.com/JuliusRye/QEC_Decoder_Hakathon_2026). Organizer updates through `2614389` are merged on the baseline branch; the imported starter was `6c03afb`.
+Cornell-QCA's canonical repository is [Cornell-QCA/QEC_Decoder_Hakathon_2026](https://github.com/Cornell-QCA/QEC_Decoder_Hakathon_2026). `origin` is this fork; `upstream` is [JuliusRye/QEC_Decoder_Hakathon_2026](https://github.com/JuliusRye/QEC_Decoder_Hakathon_2026). Organizer updates through `739d627` are merged into `main`; the latest update replaces the scoring plot. The imported starter was `6c03afb`.
 
 - [Competition format, rules, deadlines, and conflicts](COMPETITION.md)
 - [Contribution and review procedure](../CONTRIBUTING.md)

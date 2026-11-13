@@ -2,6 +2,26 @@
 
 Work from [team setup](docs/README.md) and [the competition contract](docs/COMPETITION.md). Claim one bounded experiment or fix with an owner, expected result, and cheap falsifying check. Check for another contributor's changes before editing shared files.
 
+## Share work with the team
+
+Use a short-lived branch in this repository for each contribution, including research notes. Matt can put his existing technical docs on a branch and open a pull request; a second permanent docs repository is unnecessary. Include references and distinguish hypotheses from measured results. Keep private transcripts in the private archive.
+
+Start with a clean working tree and update the shared branch:
+
+```sh
+git switch main
+git pull --ff-only origin main
+git switch -c docs/topic-name
+# Edit and verify the contribution, then stage the specific changed files.
+git add docs/path-to-note.md
+git commit -m "Document topic and supporting references"
+git push -u origin HEAD
+```
+
+Open a pull request into `main` and ask a teammate to review it. Use `decoder/`, `experiment/`, or `fix/` branch prefixes for other work. After merge, everyone updates with `git switch main` and `git pull --ff-only origin main`. If Git reports local changes or divergent history, preserve the work and resolve it deliberately; do not reset or force-push shared `main`.
+
+Multiple agents may read in parallel. Assign an owner and branch to each writing task; avoid concurrent edits to the same checkout or files. A separate clone or worktree gives each writer an independent working tree. Record a compact handoff with the branch/commit, changed files, evidence, open questions, and next owner. Pull before starting and again before integrating a contribution. Private archive access and Site task assignment are separate; follow [memory coordination](docs/memory/README.md).
+
 ## Develop and verify
 
 1. Use a branch for one candidate or hypothesis. Keep the organizer utilities separate from original decoder implementations.
