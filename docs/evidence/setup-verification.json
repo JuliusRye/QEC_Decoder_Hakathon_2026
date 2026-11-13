@@ -1,0 +1,41 @@
+{
+  "python": "3.13.7",
+  "packages": {
+    "numpy": "2.2.6",
+    "stim": "1.16.0",
+    "hackathon_2026": "0.1.0"
+  },
+  "files": {
+    "X_circuit.stim": "69d15cce609f60a7b45af88ec0a6f52b47d1fc5f08f39785fa18f50f1e47e5db",
+    "Z_circuit.stim": "2f20016bcc3d66bfdfae5a03685806f2355d6d2a4100a131e7a6999f672bc282",
+    "sample_submission.csv": "5d79c72e736279a301c8f51ba3d78df13aef1b72ff50aac80c0816a894761bb0",
+    "test.csv": "5c81111d9d1c800f459a34352b2aa498671de602486ce0e94204b1a4d6f3a480",
+    "train.csv": "8f17ab7f4867b7f5fa46094995b0a898f53796cde9f590617a48bce3b4abded4"
+  },
+  "circuits_match_bundled_after_parsing": {
+    "X": true,
+    "Z": true
+  },
+  "train_rows": 200000,
+  "test_rows": 200000,
+  "placeholder_training_ler": 0.28814625,
+  "placeholder_two_call_seconds": [
+    3.8555008359253407e-05,
+    3.9987004129216075e-05,
+    4.708699998445809e-05,
+    3.5119999665766954e-05,
+    3.949902020394802e-05
+  ],
+  "placeholder_median_seconds_local_mac": 3.949902020394802e-05,
+  "submission_rows_verified": 200000,
+  "sample_submission_id_matches_by_position": 0,
+  "sample_submission_shared_ids": 0,
+  "ids_match_if_gen_prefix_replaced_by_test": true,
+  "submission_ready": false,
+  "blockers": [
+    "Downloaded test.csv uses gen_ IDs; sample_submission.csv uses test_ IDs. Organizer clarification required; IDs were not changed."
+  ],
+  "deterministic_repeats": 5,
+  "placeholder_only_not_submitted": true,
+  "banned_packages_installed": []
+}

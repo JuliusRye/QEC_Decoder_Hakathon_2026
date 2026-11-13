@@ -1,5 +1,7 @@
 # QEC decoder hackathon, November 2026: build your own decoder
 
+**Cornell-QCA team:** [Start here](docs/README.md) for setup, the verified submission contract, rule conflicts, and the team workflow. The organizer documentation follows below.
+
 This repository holds the tools for the QEC decoder hackathon. The competition itself runs on Kaggle (invite only); the link to the competition will be added here later. On Kaggle you download the data, submit predictions and follow the leaderboard. Where this README and the Kaggle pages differ, the Kaggle pages count.
 
 ## Description
