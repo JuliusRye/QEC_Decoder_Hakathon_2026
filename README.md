@@ -5,10 +5,12 @@ Original decoders for the `[[18,4,4]]` memory experiment under SI1000 circuit no
 Start with [team setup and commands](docs/README.md), [the competition contract and source conflicts](docs/COMPETITION.md), and [contributing](CONTRIBUTING.md). Agents should read [AGENTS.md](AGENTS.md).
 
 ```sh
-uv sync --locked --extra baselines
+python3 scripts/bootstrap.py
 source .venv/bin/activate
 NUMBA_NUM_THREADS=2 python -m unittest discover -s tests -v
 ```
+
+Team onboarding automatically clones or updates private transcript memory outside this checkout and installs the locked environment. Accept your private GitHub invitation and sign in first; see [memory setup](docs/memory/README.md). Agents discover the same procedure through `AGENTS.md`/`CLAUDE.md`. Public contributors can install the decoder environment alone with `uv sync --locked --extra baselines`.
 
 Download `train.csv`, `test.csv`, `sample_submission.csv`, `X_circuit.stim`, and `Z_circuit.stim` from the [Data tab](https://www.kaggle.com/competitions/quantum-error-correction-decoder/data) into `data/kaggle/`. The download and generated runs are ignored by Git. Read [the ID correction](docs/COMPETITION.md#source-conflicts-and-corrections) before preparing predictions.
 

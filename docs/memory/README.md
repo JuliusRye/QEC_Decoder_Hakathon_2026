@@ -10,16 +10,27 @@ The connected **Cornell QCA Decoder Hackathon** MCP supports source search/read,
 
 ## Authorized reading
 
-With an account already authorized for the private archive, clone it alongside this repository in a private local parent directory, then search only the needed topic:
+After accepting the invitation and authenticating your own GitHub account, run from the decoder checkout:
 
 ```sh
-git clone https://github.com/kevinsullivan0/cornell-qca-hackathon-memory-2026.git
-cd cornell-qca-hackathon-memory-2026
-rg --files
-rg -n -i 'decoder|syndrome|decision' --glob '*.md' --glob '*.json'
+python3 scripts/bootstrap.py
 ```
 
-Use the actual directory names returned by `rg --files`; do not assume an archive schema. Follow any archive instructions governing read access. No archive clone is required to run or contribute to the decoders. Do not add a submodule, vendor archive files, or make a second transcript store here.
+This installs the locked baseline environment and clones the archive beside the checkout under `.qca-memory/`. Later invocations fast-forward the same clone and refresh dependencies; `--skip-env` updates memory only. Use `--memory-dir /your/private/directory` to select another location outside the decoder checkout. Its resolved location and revision are stored in ignored `.qca-local.json`, so agents can find it next time without asking. No transcript files are copied into this checkout.
+
+Read the clone's [AGENTS.md](https://github.com/kevinsullivan0/cornell-qca-hackathon-memory-2026/blob/main/AGENTS.md), then `STATE.md` for freshness. `CLAUDE.md` points to the same instructions. `TRANSCRIPTS.md` is the searchable full-text export; `TRANSCRIPTS.jsonl` provides structured records. `INDEX.md` links individual sources. For example, inside the private clone:
+
+```sh
+rg -n -C 3 -i 'belief propagation|color code' TRANSCRIPTS.md
+```
+
+Pending/held sources can lack text; uploaded audio is not necessarily transcribed yet. Search selectively, preserve source IDs, and distinguish proposals from human decisions and reproduced results. The onboarding files were verified at private revision `5f2a84e`; generated exports can advance independently.
+
+Multiple simultaneous website or recording sessions may capture overlapping discussion. Identical source IDs identify the same record; different IDs do not guarantee independent statements. Compare timestamps and wording, flag suspected overlap in summaries, and avoid counting repeated statements as separate evidence, consensus, or tasks. Preserve the original source records and their provenance; this onboarding does not deduplicate or delete transcripts.
+
+If access fails, accept the invitation, then authenticate with `gh auth login` and configure Git with `gh auth setup-git`, or use your existing authorized Git authentication. If `uv` is missing, install it and rerun; the private clone is still usable once fetched. A dirty clone, another branch, wrong origin, or divergent history stops the update rather than overwriting work. Resolve that state with its owner. Do not force-reset a teammate's changes. A separate authenticated Git clone works for other agent providers without the native MCP; each provider's credentials still need checking.
+
+Follow the archive instructions governing read access. No archive clone is required to run the decoders. Do not add a submodule, vendor archive files, or make a second transcript store here.
 
 ## Reviewed summaries
 

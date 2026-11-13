@@ -25,10 +25,12 @@ cd QEC_Decoder_Hakathon_2026
 Use Python 3.13 for parity with the organizer's described hand-in environment. The verified baseline environment uses Python 3.13.7, NumPy 2.2.6, Stim 1.16.0, and Numba 0.61.2. Install from the lockfile:
 
 ```sh
-uv sync --locked --extra baselines
+python3 scripts/bootstrap.py
 source .venv/bin/activate
 NUMBA_NUM_THREADS=2 python -m unittest discover -s tests -v
 ```
+
+The bootstrap requires Git, Python, `uv`, and authenticated private-repository access. Accept your GitHub invitation first; if needed, use `gh auth login` and `gh auth setup-git` with your own account. It creates or updates a private memory clone beside the checkout under `.qca-memory/`, and saves its location in ignored `.qca-local.json`. Re-run after pulling to refresh the environment and archive. Read the private clone's `AGENTS.md`, then search relevant transcripts. See [memory onboarding and troubleshooting](memory/README.md). Public contributors without private access can install the decoder environment alone with `uv sync --locked --extra baselines`.
 
 The base package supports the organizer notebooks. The optional `tutorials` extra includes QEC decoder packages banned in competition submissions. The baseline extra supplies Numba; it does not install those decoder packages.
 

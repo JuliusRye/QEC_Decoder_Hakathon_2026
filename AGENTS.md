@@ -1,5 +1,15 @@
 # Agent instructions
 
+## Start here: team onboarding
+
+When a teammate points you at this repository, clone it (or update a clean `main` with `git pull --ff-only origin main`), then run `python3 scripts/bootstrap.py` from the checkout. This syncs the locked baseline environment and automatically clones or fast-forwards the private transcript archive outside this checkout. Re-run it after pulling to refresh both. `--skip-env` refreshes only memory.
+
+Read the ignored `.qca-local.json` for the private clone's location. Read that clone's `AGENTS.md` and `STATE.md`, then search its `TRANSCRIPTS.md` or structured `TRANSCRIPTS.jsonl` for relevant context. Do not load every transcript into the prompt. Cite source IDs in private handoffs; publish only reviewed technical summaries. This works through authenticated Git and does not require a separate MCP connection.
+
+Overlapping website/recording sessions may capture the same discussion more than once, including under different source IDs. Check timestamps and content as well as IDs; repeated text is not independent evidence, consensus, or another task. Preserve raw records and provenance. Flag suspected overlap in summaries rather than deleting or silently merging sources.
+
+Each teammate must first accept their private GitHub invitation and authenticate their own account. If setup fails, report the exact missing prerequisite or access problem; do not request or reuse another person's credentials. Never silently claim the private context was loaded. The script preserves dirty or divergent clones and records only their location/revision locally. See [memory setup](docs/memory/README.md) for the access boundary.
+
 Read `docs/README.md`, `docs/COMPETITION.md`, and `CONTRIBUTING.md` before changing this repository. `CLAUDE.md` links here so all coding agents receive the same instructions.
 
 ## Competition invariants

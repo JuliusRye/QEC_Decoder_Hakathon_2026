@@ -17,3 +17,7 @@ data/kaggle_competition/
 /runs/
 /submission*.csv
 /decoders/*/models/
+
+# Per-machine private memory location; never publish transcript clones.
+/.qca-local.json
+/.qca-memory/
